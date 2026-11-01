@@ -1,38 +1,30 @@
-# Route Planner - Frontend 🗺️
+# Route Planner - Frontend
 
-Interactive Next.js map interface for the **Route Planner** application, built with **React 19**, **Leaflet**, and **Tailwind CSS**.
+Next.js frontend for the route planner project. Built to visualize shortest path routing on an interactive map. This project was developed as a learning exercise to explore graph algorithms and spatial data.
 
-Users can plan driving routes across the road network by **clicking two points on the map** or **searching locations by name** with automatic geocoding.
+## Features
 
----
+- Interactive map using Leaflet and OpenStreetMap tiles
+- Route calculation by clicking two points on the map
+- Address search using OpenStreetMap Nominatim for geocoding
+- Polyline rendering for the calculated path
+- Error handling and loading states for search requests
 
-## ✨ Features
+## Tech Stack
 
-- **Interactive Leaflet Map**: Rendered using OpenStreetMap tiles with custom markers and smooth polyline drawing.
-- **Click-to-Route**: Click once to place the starting marker, click a second time to place the destination; the shortest path is computed instantly.
-- **Address & Landmark Search**: Type any starting address and destination; geocoded via OpenStreetMap Nominatim.
-- **Responsive UI**: Overlay controls with feedback states, error handling, loading spinners, and clear buttons.
-- **Strictly Typed**: Full TypeScript definitions for coordinates, Leaflet event handlers, and API responses. Zero ESLint warnings.
+- Next.js 16 (App Router)
+- React 19
+- Leaflet & React-Leaflet
+- Tailwind CSS
+- TypeScript
 
----
-
-## 🛠️ Tech Stack
-
-- **Framework**: [Next.js 16](https://nextjs.org) (App Router, Turbopack)
-- **Library**: React 19
-- **Map Engine**: [Leaflet](https://leafletjs.com) & [React-Leaflet](https://react-leaflet.js.org)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com)
-- **Language**: TypeScript 5
-
----
-
-## 📁 Directory Structure
+## Directory Structure
 
 ```text
 route-planner/
 ├── app/
 │   ├── layout.tsx         # Root layout with Leaflet CSS import
-│   ├── page.tsx           # Page with dynamic client-side MapBox loader
+│   ├── page.tsx           # Page with dynamic MapBox component loader
 │   └── globals.css        # Tailwind CSS styles
 ├── Components/
 │   ├── Map.tsx            # Leaflet map container, markers, and polyline renderer
@@ -45,15 +37,13 @@ route-planner/
 └── package.json
 ```
 
----
-
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-- **Node.js 18+** or later
-- **npm** (or yarn / pnpm)
-- The [Route Planner Backend](https://github.com/MiniProject25/route-planner-backend) running on `http://localhost:8080`.
+- Node.js 18 or later
+- npm
+- The backend running on `http://localhost:8080`
 
 ### 1. Install Dependencies
 
@@ -63,19 +53,19 @@ npm install
 
 ### 2. Configure Environment
 
-Create or check `.env.local`:
+Copy `.env.example` to `.env.local` if it does not already exist:
 
 ```bash
 cp .env.example .env.local
 ```
 
-Ensure `NEXT_PUBLIC_BASE_URL` points to your running backend:
+Ensure `NEXT_PUBLIC_BASE_URL` points to the backend server:
 
 ```env
 NEXT_PUBLIC_BASE_URL=http://localhost:8080
 ```
 
-### 3. Start Development Server
+### 3. Run Development Server
 
 ```bash
 npm run dev
@@ -83,28 +73,16 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
----
+## Available Scripts
 
-## 🧪 Available Scripts
+- `npm run dev`: Runs the development server on `http://localhost:3000`.
+- `npm run build`: Compiles and builds the production application.
+- `npm run start`: Starts the Next.js production server.
+- `npm run lint`: Runs ESLint to check for code issues.
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Starts local Next.js development server at `http://localhost:3000` |
-| `npm run build` | Builds optimized production bundle |
-| `npm run start` | Starts production server after build |
-| `npm run lint` | Runs ESLint and TypeScript type checking |
+## Backend Communication
 
----
+The frontend calls two backend endpoints:
 
-## 🔌 Backend API Integration
-
-The frontend communicates with the backend via two main endpoints:
-
-1. **Path by Coordinates**:
-   ```http
-   GET http://localhost:8080/route/pathByLatlng?lat1=12.87&lng1=74.88&lat2=12.86&lng2=74.85
-   ```
-2. **Path by Address**:
-   ```http
-   GET http://localhost:8080/route/path?from=Kadri+Mangalore&to=Hampankatta+Mangalore
-   ```
+- `GET /route/pathByLatlng?lat1={lat1}&lng1={lng1}&lat2={lat2}&lng2={lng2}`: Used when clicking two points on the map.
+- `GET /route/path?from={from}&to={to}`: Used when searching addresses in the search box.
